@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<jaxws:client id="helloClient" serviceClass="demo.spring.service.HelloWorld"
+		address="http://localhost:8080/PersonaCXF/service/HelloWorld" />
+		
+	<bean id="pdao" class="demo.spring.dao.PersonaDaoImpl" init-method="inicializar"/>
+	
+	<bean id="personaBusiness" class="demo.spring.business.PersonaBusinessImpl">
+		<!-- La propiedad name buscará en el DAO por el nombre del setter -->
+		<property name="personaDao" ref="pdao"/>
+	</bean>
+</beans>
