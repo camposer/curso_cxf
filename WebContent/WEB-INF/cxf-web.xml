@@ -11,10 +11,30 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<!-- END: Importando clases del BUS -->
 
+	<!-- BEGIN: Definición de Servicios -->
+	<bean id="pdao" class="demo.spring.dao.PersonaDaoImpl" init-method="inicializar"/>
+	
+	<bean id="personaBusiness" class="demo.spring.business.PersonaBusinessImpl">
+		<!-- La propiedad name buscará en el DAO por el nombre del setter -->
+		<property name="personaDao" ref="pdao"/>
+	</bean>	
+	<!-- END: Definición de Servicios -->
+
+	<!-- BEGIN: Servicios SOAP -->
 	<jaxws:endpoint
 		id="helloWorld"
 		implementor="demo.spring.service.HelloWorldImpl"
 		address="/HelloWorld" />
+
+	<bean id="personaSoapImplementor" class="demo.spring.service.PersonaServiceSoapImpl">
+		<property name="personaBusiness" ref="personaBusiness"/>
+	</bean>
+	
+	<jaxws:endpoint
+		id="personaSoap"
+		implementor="#personaSoapImplementor"
+		address="/personaSoap" />
+	<!-- END: Servicios SOAP -->
 
 	<bean id="personaBean" class="demo.spring.service.PersonaService" />
 	

@@ -36,7 +36,8 @@ public class Principal {
 			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(sfechaNacimiento);
 		} catch (ParseException e) { }
 		
-		Persona p = new Persona(nombre, apellido, fechaNacimiento);
+		//Persona p = new Persona(nombre, apellido, fechaNacimiento);
+		Persona p = new Persona(nombre, apellido, sfechaNacimiento);
 		
 		personaBusiness.agregarPersona(p);
 	}
@@ -56,7 +57,8 @@ public class Principal {
 			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(sfechaNacimiento);
 		} catch (ParseException e) { }
 		
-		Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, fechaNacimiento);
+		//Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, fechaNacimiento);
+		Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, sfechaNacimiento);
 		
 		personaBusiness.modificarPersona(p);
 	}

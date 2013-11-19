@@ -9,12 +9,14 @@ public class Persona {
 	private Integer id;
 	private String nombre;
 	private String apellido;
-	private Date fechaNacimiento;
+	//private Date fechaNacimiento;
+	private String fechaNacimiento;
 
 	public Persona() {
 	}
 	
-	public Persona(Integer id, String nombre, String apellido, Date fechaNacimiento) {
+	//public Persona(Integer id, String nombre, String apellido, Date fechaNacimiento) {
+	public Persona(Integer id, String nombre, String apellido, String fechaNacimiento) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -25,7 +27,8 @@ public class Persona {
 		this(null, nombre, apellido, null);
 	}
 
-	public Persona(String nombre, String apellido, Date fechaNacimiento) {
+	//public Persona(String nombre, String apellido, Date fechaNacimiento) {
+	public Persona(String nombre, String apellido, String fechaNacimiento) {
 		this(null, nombre, apellido, fechaNacimiento);
 	}
 
@@ -50,11 +53,13 @@ public class Persona {
 		this.apellido = apellido;
 	}
 
-	public Date getFechaNacimiento() {
+	//public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	//public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

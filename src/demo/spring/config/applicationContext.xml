@@ -8,6 +8,9 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<jaxws:client id="helloClient" serviceClass="demo.spring.service.HelloWorld"
 		address="http://localhost:8080/PersonaCXF/service/HelloWorld" />
 		
+	<jaxws:client id="personaSoapClient" serviceClass="demo.spring.service.PersonaServiceSoap"
+		address="http://localhost:8080/PersonaCXF/service/personaSoap" />
+
 	<bean id="pdao" class="demo.spring.dao.PersonaDaoImpl" init-method="inicializar"/>
 	
 	<bean id="personaBusiness" class="demo.spring.business.PersonaBusinessImpl">
