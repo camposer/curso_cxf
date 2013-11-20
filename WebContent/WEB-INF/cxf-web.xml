@@ -1,8 +1,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
 	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
@@ -10,6 +14,35 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<!-- END: Importando clases del BUS -->
+
+	<!-- BEGIN: Configuración Spring -->
+	<context:annotation-config /><!-- Habilita soporte de anotaciones -->
+	<tx:annotation-driven /><!-- Habilita manejo de transacciones -->
+	<!-- END: Configuración Spring -->
+	
+	<!-- BEGIN: Configuración MyBatis --> 	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"><!-- Pool de conexiones -->
+		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+		<property name="url" value="jdbc:derby://localhost:1527/persona" />
+		<property name="username" value="user" />
+		<property name="password" value="123" />
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="10" />
+	</bean>	
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="personaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" >
+		<property name="mapperInterface" value="demo.spring.mapper.PersonaMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<!-- END: Configuración MyBatis -->
 
 	<!-- BEGIN: Definición de Servicios -->
 	<bean id="pdao" class="demo.spring.dao.PersonaDaoImpl" init-method="inicializar"/>
@@ -41,8 +74,7 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 		<property name="personaBusiness" ref="personaBusiness"/>
 	</bean>
 	
-	<bean id="jsonProvider" 
-		class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
 
 	<jaxrs:server id="personaService" address="/personas">
 		<jaxrs:serviceBeans>

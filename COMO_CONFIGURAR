@@ -1,0 +1,6 @@
+1.- Descargar derby
+2.- Levantar el RDBMS:
+	C:\db-derby-10.10.1.1-bin\bin> startNetworkServer.bat
+3.- Conectar el Eclipse (Database Development) al Derby (el Driver JDBC está en DERBY_HOME\lib\derbyclient.jar
+4.- Ejecutar los scripts sql\create.sql y sql\insert.sql
+

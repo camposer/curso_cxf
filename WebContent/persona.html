@@ -1,90 +1,88 @@
 <html>
-	<head>
-		<meta charset="utf-8">
-		<script src="js/jquery-1.10.2.js"></script>
-		<script>
-			var url = "/PersonaCXF/service/personas";
+<head>
+<meta charset="utf-8">
+<script src="js/jquery-1.10.2.js"></script>
+<script>
+	var url = "/PersonaCXF/service/personas";
 
-			var obtenerTodos = function() {
-				$.ajax(url, {
-					type: "GET",
-					dataType: "json"
-				}).done(function(json) {
-					$("#resultado").html(JSON.stringify(json)); // stringify convierte un JSON a String
-				});
-			};		
+	var obtenerTodos = function() {
+		$.ajax(url, {
+			type : "GET",
+			dataType : "json"
+		}).done(function(json) {
+			$("#resultado").html(JSON.stringify(json)); // stringify convierte un JSON a String
+		});
+	};
 
-			var obtener = function() {
-				var id = $("#mensaje").val();
+	var obtener = function() {
+		var id = $("#mensaje").val();
 
-        $.ajax(url + "/" + id, {
-          type: "GET",
-          dataType: "json"
-        }).done(function(json) {
-          $("#resultado").html(JSON.stringify(json));
-        });
-			};
+		$.ajax(url + "/" + id, {
+			type : "GET",
+			dataType : "json"
+		}).done(function(json) {
+			$("#resultado").html(JSON.stringify(json));
+		});
+	};
 
-			var agregar = function() {
-				var mensaje = $("#mensaje").val();
+	var agregar = function() {
+		var mensaje = $("#mensaje").val();
 
-        $.ajax(url, {
-          type: "POST",
-					data: mensaje,
-          contentType: "application/json"
-        }).done(function() {
-          $("#resultado").html("Elemento agregado...");
-        });
-			};
+		$.ajax(url, {
+			type : "POST",
+			data : mensaje,
+			contentType : "application/json"
+		}).done(function() {
+			$("#resultado").html("Elemento agregado...");
+		});
+	};
 
-			var modificar = function() {
-				var mensaje = $("#mensaje").val();
+	var modificar = function() {
+		var mensaje = $("#mensaje").val();
 
-        $.ajax(url, {
-          type: "PUT",
-					data: mensaje,
-          contentType: "application/json"
-        }).done(function() {
-          $("#resultado").html("Elemento modificado...");
-        });
-			};
+		$.ajax(url, {
+			type : "PUT",
+			data : mensaje,
+			contentType : "application/json"
+		}).done(function() {
+			$("#resultado").html("Elemento modificado...");
+		});
+	};
 
-			var eliminar = function() {
-				var id = $("#mensaje").val();
+	var eliminar = function() {
+		var id = $("#mensaje").val();
 
-        $.ajax(url + "/" + id, {
-          type: "DELETE"
-        }).done(function() {
-          $("#resultado").html("Elemento eliminado...");
-        });
-			};
+		$.ajax(url + "/" + id, {
+			type : "DELETE"
+		}).done(function() {
+			$("#resultado").html("Elemento eliminado...");
+		});
+	};
 
-			$(document).ready(function() {
-				$("#btnObtenerTodos").click(obtenerTodos);
-				$("#btnObtener").click(obtener);
-				$("#btnAgregar").click(agregar);
-				$("#btnModificar").click(modificar);
-				$("#btnEliminar").click(eliminar);
-			});
-		</script>
-	</head>
-	<body>
-		<p>
-			En caso de que la operación sea agregar o modificar el mensaje debe ser 
-			un JSON, por ejemplo: { "id": "6", "nombre": "Mio", "apellido": "Otro Otro" }. 
-			Si desea agregar puede omitir el "id". Para obtener y eliminar debe 
-			especificar un número, por ejemplo: 2
-		</p>
-		<textarea id="mensaje"></textarea>
-		<br/>
-		<br/>
-		<input type="button" id="btnObtenerTodos" value="obtenerTodos"/>
-		<input type="button" id="btnObtener" value="obtener"/>
-		<input type="button" id="btnAgregar" value="agregar"/>
-		<input type="button" id="btnModificar" value="modificar"/>
-		<input type="button" id="btnEliminar" value="eliminar"/>
-		<br/>
-		<br/>
-		<div id="resultado"></div>
-	</body>
+	$(document).ready(function() {
+		$("#btnObtenerTodos").click(obtenerTodos);
+		$("#btnObtener").click(obtener);
+		$("#btnAgregar").click(agregar);
+		$("#btnModificar").click(modificar);
+		$("#btnEliminar").click(eliminar);
+	});
+</script>
+</head>
+<body>
+	<p>En caso de que la operación sea agregar o modificar el mensaje
+		debe ser un JSON, por ejemplo: { "id": "6", "nombre": "Mio",
+		"apellido": "Otro Otro" }. Si desea agregar puede omitir el "id". Para
+		obtener y eliminar debe especificar un número, por ejemplo: 2</p>
+	<textarea id="mensaje"></textarea>
+	<br />
+	<br />
+	<input type="button" id="btnObtenerTodos" value="obtenerTodos" />
+	<input type="button" id="btnObtener" value="obtener" />
+	<input type="button" id="btnAgregar" value="agregar" />
+	<input type="button" id="btnModificar" value="modificar" />
+	<input type="button" id="btnEliminar" value="eliminar" />
+	<br />
+	<br />
+	<div id="resultado"></div>
+</body>
 </html>
