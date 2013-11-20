@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import demo.spring.business.PersonaBusiness;
 
 public class Test {
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("demo/spring/config/applicationContext.xml");

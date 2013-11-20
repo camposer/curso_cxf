@@ -36,7 +36,10 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 		address="/personaSoap" />
 	<!-- END: Servicios SOAP -->
 
-	<bean id="personaBean" class="demo.spring.service.PersonaService" />
+	<!-- BEGIN: Servicios REST -->
+	<bean id="personaBean" class="demo.spring.service.PersonaService">
+		<property name="personaBusiness" ref="personaBusiness"/>
+	</bean>
 	
 	<bean id="jsonProvider" 
 		class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
@@ -49,4 +52,5 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 			<ref bean='jsonProvider' />
 		</jaxrs:providers>
 	</jaxrs:server>
+	<!-- END: Servicios REST -->
 </beans>

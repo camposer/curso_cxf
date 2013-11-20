@@ -10,16 +10,17 @@ import java.util.Scanner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import demo.spring.business.PersonaBusiness;
 import demo.spring.model.Persona;
+import demo.spring.service.PersonaServiceSoap;
 
 public class Principal {
-	private PersonaBusiness personaBusiness;
+	private PersonaServiceSoap personaSoapClient;
 	private Scanner scanner;
 	
+	@SuppressWarnings("resource")
 	public Principal() {
 		ApplicationContext context = new ClassPathXmlApplicationContext("demo/spring/config/applicationContext.xml");
-		personaBusiness = context.getBean("personaBusiness", PersonaBusiness.class);
+		personaSoapClient = context.getBean("personaSoapClient", PersonaServiceSoap.class);
 		scanner = new Scanner(System.in);
 	}
 	
@@ -36,10 +37,9 @@ public class Principal {
 			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(sfechaNacimiento);
 		} catch (ParseException e) { }
 		
-		//Persona p = new Persona(nombre, apellido, fechaNacimiento);
-		Persona p = new Persona(nombre, apellido, sfechaNacimiento);
+		Persona p = new Persona(nombre, apellido, fechaNacimiento);
 		
-		personaBusiness.agregarPersona(p);
+		personaSoapClient.agregarPersona(p);
 	}
 
 	public void modificar() {
@@ -57,17 +57,16 @@ public class Principal {
 			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(sfechaNacimiento);
 		} catch (ParseException e) { }
 		
-		//Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, fechaNacimiento);
-		Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, sfechaNacimiento);
+		Persona p = new Persona(Integer.parseInt(sid), nombre, apellido, fechaNacimiento);
 		
-		personaBusiness.modificarPersona(p);
+		personaSoapClient.modificarPersona(p);
 	}
 	
 	public void eliminar() {
 		System.out.println("Id? ");
 		String sid = scanner.nextLine();
 
-		personaBusiness.eliminarPersona(Integer.parseInt(sid));
+		personaSoapClient.eliminarPersona(Integer.parseInt(sid));
 	}
 	
 	public void obtener() {
@@ -76,13 +75,13 @@ public class Principal {
 
 		imprimir(
 				Arrays.asList(new Persona[] {
-					personaBusiness.obtenerPersona(Integer.parseInt(sid))
+					personaSoapClient.obtenerPersona(Integer.parseInt(sid))
 				})
 			);
 	}
 
 	public void obtenerTodos() {
-		imprimir(personaBusiness.obtenerPersonas());
+		imprimir(personaSoapClient.obtenerPersonas());
 	}
 
 	public void imprimir(List<Persona> personas) {
