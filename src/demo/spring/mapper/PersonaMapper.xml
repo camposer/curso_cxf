@@ -2,5 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="demo.spring.mapper.PersonaMapper">
+	<resultMap type="demo.spring.model.Persona" id="Persona">
+		<id property="id" column="id"/>
+		<result property="nombre" column="nombre" />	
+		<result property="apellido" column="apellido" />
+		<result property="fechaNacimiento" column="fechaNacimiento" />
+		<collection property="ordenadores" column="ordenador_id" resultMap="Ordenador" columnPrefix="ordenador_" />
+	</resultMap>
 
+	<resultMap type="demo.spring.model.Ordenador" id="Ordenador">
+		<id property="id" column="id"/>
+		<result property="nombre" column="nombre" />
+		<result property="serial" column="serial" />
+	</resultMap>	
+
+	<sql id="sqlPersonas">
+		SELECT
+			persona.*,
+			o.id AS ordenador_id,
+			o.nombre AS ordenador_nombre,
+			o.serial AS ordenador_serial
+		FROM persona, ordenador o
+		WHERE persona.id = o.persona_id	
+	</sql>
+
+	<select id="obtenerTodos" resultMap="Persona">
+		<include refid="sqlPersonas"/>
+	</select>
+
+	<select id="obtener" resultMap="Persona" parameterType="int">
+		<include refid="sqlPersonas"/>
+		AND persona.id = #{id}
+	</select>
+
+	<insert id="agregar" parameterType="demo.spring.model.Persona"><!-- Este nombre es el que tiene el método en la interfaz -->
+		<choose>
+			<when test="fechaNacimiento != null">
+				INSERT INTO persona(nombre, apellido, fechaNacimiento)
+				VALUES(#{nombre}, #{apellido}, #{fechaNacimiento})
+			</when>
+			<otherwise>
+				INSERT INTO persona(nombre, apellido)
+				VALUES(#{nombre}, #{apellido})			
+			</otherwise>
+		</choose>
+	</insert>
+	
+	<update id="modificar">
+		UPDATE persona SET nombre = #{nombre}, apellido = #{apellido} 
+		<if test="fechaNacimiento != null">
+			, fechaNacimiento = #{fechaNacimiento}
+		</if>
+		WHERE id = #{id}
+	</update>
 </mapper>

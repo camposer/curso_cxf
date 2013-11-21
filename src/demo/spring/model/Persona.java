@@ -1,6 +1,7 @@
 package demo.spring.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,6 +11,7 @@ public class Persona {
 	private String nombre;
 	private String apellido;
 	private Date fechaNacimiento;
+	private List<Ordenador> ordenadores;
 
 	public Persona() {
 	}
@@ -58,10 +60,18 @@ public class Persona {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public List<Ordenador> getOrdenadores() {
+		return ordenadores;
+	}
+
+	public void setOrdenadores(List<Ordenador> ordenadores) {
+		this.ordenadores = ordenadores;
+	}
+
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido="
-				+ apellido + ", fechaNacimiento=" + fechaNacimiento + "]";
+				+ apellido + ", fechaNacimiento=" + fechaNacimiento
+				+ ", ordenadores=" + ordenadores + "]";
 	}	
-	
 }

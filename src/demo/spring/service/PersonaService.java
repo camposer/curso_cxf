@@ -12,14 +12,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import demo.spring.business.PersonaBusiness;
-import demo.spring.mapper.PersonaMapper;
 import demo.spring.model.Persona;
 
 @Produces({ "application/json" })
 @Consumes({ "application/json", "application/xml" })
 public class PersonaService {
 	private PersonaBusiness personaBusiness;
-	private PersonaMapper personaMapper;
 
 	/**
 	 * Ej. GET /personas
@@ -28,8 +26,7 @@ public class PersonaService {
 	@GET
 	@Path("")
 	public List<Persona> obtenerPersonas() {
-		//return personaBusiness.obtenerPersonas();
-		return personaMapper.obtenerTodos();
+		return personaBusiness.obtenerPersonas();
 	}
 
 	/**
@@ -79,4 +76,5 @@ public class PersonaService {
 	public void setPersonaBusiness(PersonaBusiness personaBusiness) {
 		this.personaBusiness = personaBusiness;
 	}
+
 }
